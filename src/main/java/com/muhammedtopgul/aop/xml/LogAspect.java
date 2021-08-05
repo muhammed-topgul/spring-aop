@@ -1,4 +1,4 @@
-package com.muhammedtopgul.aop.terms;
+package com.muhammedtopgul.aop.xml;
 
 /*
  * created by Muhammed Topgul
@@ -6,8 +6,8 @@ package com.muhammedtopgul.aop.terms;
  * at 21:28
  */
 
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -17,8 +17,8 @@ public class LogAspect {
     // to any return type (second *)
     // to any method (first *)
     // to any argument ((..))
-    @Before("execution(* * (..))")
-    public void logBefore() {
-        System.out.println("Logging before method being executed...");
+    @After("execution(* * (..))")
+    public void logAfter() {
+        System.out.println("Logging after method being executed...");
     }
 }
