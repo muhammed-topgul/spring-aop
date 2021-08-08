@@ -6,12 +6,10 @@ package com.muhammedtopgul.aop.advices;
  * at 21:28
  */
 
+import com.muhammedtopgul.aop.advices.exception.MyException;
 import com.muhammedtopgul.aop.advices.model.User;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -44,5 +42,10 @@ public class LogAspect {
     @AfterReturning(pointcut = "execution(* * (..))", returning = "user")
     public void logAfterReturningUser(User user) {
         System.out.println("Returned User: " + user.toString());
+    }
+
+    @AfterThrowing(pointcut = "execution(* getAge(..))", throwing = "exception")
+    public void logAfterThrowing(JoinPoint joinPoint, MyException exception) {
+        System.out.println("Log After Throwing: " + joinPoint.getSignature().getName() + " method throws : " + exception.getMessage());
     }
 }

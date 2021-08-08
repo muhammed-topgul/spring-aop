@@ -23,5 +23,8 @@ public class Application {
         System.out.println("\n*********************************");
         customerService.getName();
         customerService.getUser();
+
+        System.out.println("\n*********************************");
+        customerService.getAge();
     }
 }

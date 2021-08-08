@@ -6,6 +6,7 @@ package com.muhammedtopgul.aop.advices;
  * at 21:21
  */
 
+import com.muhammedtopgul.aop.advices.exception.MyException;
 import com.muhammedtopgul.aop.advices.model.User;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +25,10 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public User getUser() {
         return new User("Muhammed", "Topgül");
+    }
+
+    @Override
+    public String getAge() {
+        throw new MyException("Exception occurred in CustomerService.getAge()");
     }
 }

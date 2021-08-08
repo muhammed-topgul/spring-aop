@@ -15,4 +15,6 @@ public interface CustomerService {
     String getName();
 
     User getUser();
+
+    String getAge();
 }
