@@ -31,4 +31,10 @@ public class CustomerServiceImpl implements CustomerService {
     public String getAge() {
         throw new MyException("Exception occurred in CustomerService.getAge()");
     }
+
+    @Override
+    public double calculatePayment(double rate, int hours) {
+        System.out.println("Rate: " + rate + ", hours: " + hours);
+        return rate * hours;
+    }
 }

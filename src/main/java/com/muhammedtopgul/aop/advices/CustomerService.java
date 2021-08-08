@@ -17,4 +17,6 @@ public interface CustomerService {
     User getUser();
 
     String getAge();
+
+    double calculatePayment(double rate, int hours);
 }

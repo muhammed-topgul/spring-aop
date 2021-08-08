@@ -9,6 +9,7 @@ package com.muhammedtopgul.aop.advices;
 import com.muhammedtopgul.aop.advices.exception.MyException;
 import com.muhammedtopgul.aop.advices.model.User;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
@@ -16,17 +17,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class LogAspect {
 
-    @Before("execution(* com.muhammedtopgul.aop.advices.AccountService.* (..)))")
-    public void logBeforeAll(JoinPoint joinPoint) {
-        System.out.println("Log before all executing..." + joinPoint.getSignature().getName());
-        System.out.println("Target class name: " + joinPoint.getTarget().getClass().getName());
-        System.out.println("Args: " + joinPoint.getArgs()[0]);
-        System.out.println(joinPoint.getThis().getClass().getName());
-    }
-
     @After("execution(* * (..)))")
     public void logAfterAll(JoinPoint joinPoint) {
         System.out.println("Log after all executing..." + joinPoint.getSignature().getName());
+    }
+
+    @Before("execution(* com.muhammedtopgul.aop.advices.AccountService.* (..)))")
+    public void logBeforeAll(JoinPoint joinPoint) {
+        System.out.println("Log before AccountService executing..." + joinPoint.getSignature().getName());
+        System.out.println("Target class name: " + joinPoint.getTarget().getClass().getName());
+        System.out.println("Args: " + joinPoint.getArgs()[0]);
+        System.out.println(joinPoint.getThis().getClass().getName());
     }
 
     @After("execution(* com.muhammedtopgul.aop.advices.CustomerService.* (..)))")
@@ -47,5 +48,35 @@ public class LogAspect {
     @AfterThrowing(pointcut = "execution(* getAge(..))", throwing = "exception")
     public void logAfterThrowing(JoinPoint joinPoint, MyException exception) {
         System.out.println("Log After Throwing: " + joinPoint.getSignature().getName() + " method throws : " + exception.getMessage());
+    }
+
+    @Around("execution(* com.muhammedtopgul.aop.advices.CustomerService.calculatePayment(double , int ))")
+    public Object aroundAdvice(ProceedingJoinPoint joinPoint) {
+        Object[] args = joinPoint.getArgs();
+        System.out.println("Args in Around Advice: " + args[0] + ", " + args[1]);
+
+        Object result = null;
+
+        try {
+            result = joinPoint.proceed();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+
+        System.out.println("Original actual result of calculatePayment method: " + result);
+
+        // changes actual result
+        args[0] = 50;
+        args[1] = 15;
+
+        try {
+            result = joinPoint.proceed(args);
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+
+        System.out.println("Modified actual result of calculatePayment method: " + result);
+
+        return 30.0;
     }
 }
