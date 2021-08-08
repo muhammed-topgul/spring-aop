@@ -19,5 +19,9 @@ public class Application {
         customerService.doSomething();
         System.out.println("\n");
         accountService.deposit(100.0);
+
+        System.out.println("\n*********************************");
+        customerService.getName();
+        customerService.getUser();
     }
 }

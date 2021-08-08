@@ -6,7 +6,13 @@ package com.muhammedtopgul.aop.advices;
  * at 21:20
  */
 
+import com.muhammedtopgul.aop.advices.model.User;
+
 public interface CustomerService {
 
     void doSomething();
+
+    String getName();
+
+    User getUser();
 }
